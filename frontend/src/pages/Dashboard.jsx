@@ -14,7 +14,7 @@ const [projects,setProjects] = useState([]);
 const getTasks = async()=>{
 
 const response = await axios.get(
-"http://localhost:5000/api/task/all"
+"/api/task/all"
 );
 
 setTasks(response.data);
@@ -24,7 +24,7 @@ setTasks(response.data);
 const getProjects = async()=>{
 
 const response = await axios.get(
-"http://localhost:5000/api/project/all"
+"/api/project/all"
 );
 
 setProjects(response.data);
@@ -34,7 +34,8 @@ setProjects(response.data);
 const addProject = async()=>{
 
 const response = await axios.post(
-"http://localhost:5000/api/project/add",
+
+"/api/project/add",
 
 {
 name:projectName,
@@ -54,10 +55,13 @@ getProjects();
 const addTask = async()=>{
 
 const response = await axios.post(
-"http://localhost:5000/api/task/add",
+
+"/api/task/add",
+
 {
 title
 }
+
 );
 
 alert(response.data.message);
@@ -71,7 +75,9 @@ getTasks();
 const completeTask = async(id)=>{
 
 await axios.put(
-`http://localhost:5000/api/task/complete/${id}`
+
+`/api/task/complete/${id}`
+
 );
 
 getTasks();
@@ -81,7 +87,9 @@ getTasks();
 const deleteTask = async(id)=>{
 
 await axios.delete(
-`http://localhost:5000/api/task/delete/${id}`
+
+`/api/task/delete/${id}`
+
 );
 
 getTasks();

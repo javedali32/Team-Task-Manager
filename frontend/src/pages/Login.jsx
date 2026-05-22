@@ -1,21 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
-
 function Login(){
 
-const navigate = useNavigate();
+const [email,setEmail]=useState("");
+const [password,setPassword]=useState("");
 
-const [email,setEmail] = useState("");
-const [password,setPassword] = useState("");
-
-const handleLogin = async()=>{
+const loginUser = async()=>{
 
 try{
 
 const response = await axios.post(
-"http://localhost:5000/api/auth/login",
+
+"/api/auth/login",
 
 {
 email,
@@ -26,13 +23,13 @@ password
 
 alert(response.data.message);
 
-navigate("/dashboard");
+window.location="/dashboard";
 
 }
 
 catch(error){
 
-alert(error.response.data.message);
+alert("Server Error");
 
 }
 
@@ -47,20 +44,18 @@ return(
 <input
 type="email"
 placeholder="Email"
+value={email}
 onChange={(e)=>setEmail(e.target.value)}
 />
-
-<br/><br/>
 
 <input
 type="password"
 placeholder="Password"
+value={password}
 onChange={(e)=>setPassword(e.target.value)}
 />
 
-<br/><br/>
-
-<button onClick={handleLogin}>
+<button onClick={loginUser}>
 Login
 </button>
 

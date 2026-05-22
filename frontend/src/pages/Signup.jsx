@@ -3,16 +3,17 @@ import axios from "axios";
 
 function Signup(){
 
-const [name,setName] = useState("");
-const [email,setEmail] = useState("");
-const [password,setPassword] = useState("");
+const [name,setName]=useState("");
+const [email,setEmail]=useState("");
+const [password,setPassword]=useState("");
 
-const handleSignup = async()=>{
+const signupUser = async()=>{
 
 try{
 
 const response = await axios.post(
-"http://localhost:5000/api/auth/signup",
+
+"/api/auth/signup",
 
 {
 name,
@@ -24,11 +25,13 @@ password
 
 alert(response.data.message);
 
+window.location="/";
+
 }
 
 catch(error){
 
-alert(error.response.data.message);
+alert("Server Error");
 
 }
 
@@ -43,28 +46,25 @@ return(
 <input
 type="text"
 placeholder="Name"
+value={name}
 onChange={(e)=>setName(e.target.value)}
 />
-
-<br/><br/>
 
 <input
 type="email"
 placeholder="Email"
+value={email}
 onChange={(e)=>setEmail(e.target.value)}
 />
-
-<br/><br/>
 
 <input
 type="password"
 placeholder="Password"
+value={password}
 onChange={(e)=>setPassword(e.target.value)}
 />
 
-<br/><br/>
-
-<button onClick={handleSignup}>
+<button onClick={signupUser}>
 Signup
 </button>
 
