@@ -31,7 +31,7 @@ window.location="/";
 
 catch(error){
 
-alert("Server Error");
+alert("Signup Failed");
 
 }
 

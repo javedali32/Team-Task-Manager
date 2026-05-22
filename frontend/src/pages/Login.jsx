@@ -29,7 +29,7 @@ window.location="/dashboard";
 
 catch(error){
 
-alert("Server Error");
+alert("Login Failed");
 
 }
 
