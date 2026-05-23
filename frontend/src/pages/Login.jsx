@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Login(){
+function Login() {
 
 const [email,setEmail]=useState("");
 const [password,setPassword]=useState("");
@@ -12,7 +12,7 @@ try{
 
 const response = await axios.post(
 
-"https://teamtaskmanager-ivory.vercel.app/api",
+"https://teamtaskmanager-ivory.vercel.app/api/auth/login",
 
 {
 email,
@@ -30,6 +30,8 @@ window.location="/dashboard";
 catch(error){
 
 alert("Login Failed");
+
+console.log(error);
 
 }
 
