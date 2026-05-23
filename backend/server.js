@@ -13,22 +13,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/task", taskRoutes);
 app.use("/api/project", projectRoutes);
 
-app.get("/", (req,res)=>{
-res.send("Backend running");
+// Test route
+app.get("/", (req, res) => {
+  res.send("Backend running");
 });
 
+// MongoDB connect
 mongoose.connect(process.env.MONGO_URL)
-.then(()=>{
-console.log("MongoDB Connected");
+.then(() => {
+  console.log("MongoDB Connected");
 })
-.catch((err)=>{
-console.log(err);
+.catch((err) => {
+  console.log("Mongo Error:", err);
 });
 
-app.listen(process.env.PORT, ()=>{
-console.log("Server started");
+// Port fix
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
