@@ -13,7 +13,7 @@ try{
 
 const response = await axios.post(
 
-"/api/auth/signup",
+"https://teamtaskmanager-ivory.vercel.app/api/auth/register",
 
 {
 name,
@@ -32,6 +32,8 @@ window.location="/";
 catch(error){
 
 alert("Signup Failed");
+
+console.log(error);
 
 }
 
