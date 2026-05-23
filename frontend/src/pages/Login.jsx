@@ -12,7 +12,7 @@ try{
 
 const response = await axios.post(
 
-"/api/auth/login",
+"https://YOUR_BACKEND_URL.vercel.app/api/auth/login",
 
 {
 email,
