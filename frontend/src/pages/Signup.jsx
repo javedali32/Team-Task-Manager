@@ -13,7 +13,7 @@ try{
 
 const response = await axios.post(
 
-"https://teamtaskmanager-ivory.vercel.app/api/auth/register",
+"https://teamtaskmanager-ivory.vercel.app/api/auth/signup",
 
 {
 name,
