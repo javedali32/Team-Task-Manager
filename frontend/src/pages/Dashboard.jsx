@@ -1,47 +1,72 @@
-import { useState,useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
-import "./Dashboard.css";
 
 function Dashboard(){
 
-const [title,setTitle] = useState("");
-const [tasks,setTasks] = useState([]);
+const API = "https://teamtaskmanager-ivory.vercel.app";
 
 const [projectName,setProjectName] = useState("");
+const [title,setTitle] = useState("");
+
 const [projects,setProjects] = useState([]);
+const [tasks,setTasks] = useState([]);
+
+useEffect(()=>{
+
+getProjects();
+getTasks();
+
+},[]);
+
+const getProjects = async()=>{
+
+try{
+
+const response = await axios.get(
+`${API}/api/project/all`
+);
+
+setProjects(response.data);
+
+}
+
+catch(error){
+
+console.log(error);
+
+}
+
+};
 
 const getTasks = async()=>{
 
+try{
+
 const response = await axios.get(
-"/api/task/all"
+`${API}/api/task/all`
 );
 
 setTasks(response.data);
 
-};
+}
 
-const getProjects = async()=>{
+catch(error){
 
-const response = await axios.get(
-"/api/project/all"
-);
+console.log(error);
 
-setProjects(response.data);
+}
 
 };
 
 const addProject = async()=>{
 
+try{
+
 const response = await axios.post(
-
-"/api/project/add",
-
+`${API}/api/project/add`,
 {
-name:projectName,
-role:"Admin"
+name:projectName
 }
-
 );
 
 alert(response.data.message);
@@ -50,18 +75,25 @@ setProjectName("");
 
 getProjects();
 
+}
+
+catch(error){
+
+alert("Project add failed");
+
+}
+
 };
 
 const addTask = async()=>{
 
+try{
+
 const response = await axios.post(
-
-"/api/task/add",
-
+`${API}/api/task/add`,
 {
 title
 }
-
 );
 
 alert(response.data.message);
@@ -70,14 +102,20 @@ setTitle("");
 
 getTasks();
 
+}
+
+catch(error){
+
+alert("Task add failed");
+
+}
+
 };
 
 const completeTask = async(id)=>{
 
 await axios.put(
-
-`/api/task/complete/${id}`
-
+`${API}/api/task/complete/${id}`
 );
 
 getTasks();
@@ -87,65 +125,18 @@ getTasks();
 const deleteTask = async(id)=>{
 
 await axios.delete(
-
-`/api/task/delete/${id}`
-
+`${API}/api/task/delete/${id}`
 );
 
 getTasks();
 
 };
 
-const logout=()=>{
-
-window.location="/";
-
-};
-
-useEffect(()=>{
-
-getTasks();
-getProjects();
-
-},[]);
-
-const pendingTasks=
-tasks.filter(
-task=>task.status==="Pending"
-).length;
-
-const completedTasks=
-tasks.filter(
-task=>task.status==="Completed"
-).length;
-
 return(
 
-<div className="container">
-
-<div className="card">
+<div>
 
 <h1>Dashboard</h1>
-
-<button onClick={logout}>
-Logout
-</button>
-
-<h3>
-Projects : {projects.length}
-</h3>
-
-<h3>
-Pending : {pendingTasks}
-</h3>
-
-<h3>
-Completed : {completedTasks}
-</h3>
-
-</div>
-
-<div className="card">
 
 <h2>Add Project</h2>
 
@@ -160,13 +151,25 @@ onChange={(e)=>setProjectName(e.target.value)}
 Add Project
 </button>
 
+<h3>Projects</h3>
+
+{projects.map((project,index)=>(
+
+<div key={index}>
+
+{project.name}
+
 </div>
 
-<div className="card">
+))}
+
+<hr/>
+
+<h2>Add Task</h2>
 
 <input
 type="text"
-placeholder="Enter task"
+placeholder="Task title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 />
@@ -175,41 +178,29 @@ onChange={(e)=>setTitle(e.target.value)}
 Add Task
 </button>
 
-<h2>Task List</h2>
+<h3>Tasks</h3>
 
-{
-tasks.map((task,index)=>(
+{tasks.map((task)=>(
 
-<div key={index} className="task">
+<div key={task._id}>
 
-<p>
 {task.title}
--
-{task.status}
-</p>
 
-<div>
-
-<button
-onClick={()=>completeTask(task._id)}
->
+<button onClick={()=>
+completeTask(task._id)
+}>
 Complete
 </button>
 
-<button
-onClick={()=>deleteTask(task._id)}
->
+<button onClick={()=>
+deleteTask(task._id)
+}>
 Delete
 </button>
 
 </div>
 
-</div>
-
-))
-}
-
-</div>
+))}
 
 </div>
 
