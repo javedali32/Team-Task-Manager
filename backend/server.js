@@ -21,18 +21,30 @@ app.get("/", (req,res)=>{
 res.send("Backend running");
 });
 
-mongoose.connect(process.env.MONGO_URL,{
-serverSelectionTimeoutMS:30000
-})
-.then(()=>{
-console.log("MongoDB Connected");
-})
-.catch((err)=>{
-console.log("Mongo Error:",err);
-});
-
 const PORT = process.env.PORT || 5000;
 
+async function startServer(){
+
+try{
+
+await mongoose.connect(
+process.env.MONGO_URL
+);
+
+console.log("MongoDB Connected");
+
 app.listen(PORT,()=>{
-console.log("Server started");
+console.log(`Server started on ${PORT}`);
 });
+
+}
+
+catch(error){
+
+console.log(error);
+
+}
+
+}
+
+startServer();
