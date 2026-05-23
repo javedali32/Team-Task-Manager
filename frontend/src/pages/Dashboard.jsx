@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./Dashboard.css";
 
 function Dashboard(){
 
@@ -134,9 +135,11 @@ getTasks();
 
 return(
 
-<div>
+<div className="dashboard">
 
 <h1>Dashboard</h1>
+
+<div className="section">
 
 <h2>Add Project</h2>
 
@@ -155,7 +158,7 @@ Add Project
 
 {projects.map((project,index)=>(
 
-<div key={index}>
+<div key={index} className="card">
 
 {project.name}
 
@@ -163,7 +166,9 @@ Add Project
 
 ))}
 
-<hr/>
+</div>
+
+<div className="section">
 
 <h2>Add Task</h2>
 
@@ -182,7 +187,7 @@ Add Task
 
 {tasks.map((task)=>(
 
-<div key={task._id}>
+<div key={task._id} className="card">
 
 {task.title}
 
@@ -201,6 +206,8 @@ Delete
 </div>
 
 ))}
+
+</div>
 
 </div>
 
